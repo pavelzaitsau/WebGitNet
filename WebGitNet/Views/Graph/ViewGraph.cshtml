@@ -91,8 +91,12 @@
         {
             <span class="label @(refTypeLabels[r.RefType])"><i class="@(refTypeIcons[r.RefType]) icon-white"></i>@r.Name</span>
         }
-
-        @Html.ActionLink(string.IsNullOrWhiteSpace(e.LogEntry.Subject) ? "(no subject)" : e.LogEntry.Subject, "ViewCommit", "Browse", new { @object = e.LogEntry.CommitHash }, null)
+        @Html.ActionLink(
+            string.IsNullOrWhiteSpace(e.LogEntry.Subject) ? "(no subject)" : e.LogEntry.Subject,
+            "ViewCommit",
+            "Browse",
+            new { @object = e.LogEntry.CommitHash },
+            new { title = string.Format("By {0} at {1}", e.LogEntry.Author, e.LogEntry.AuthorDate.ToString("u")) })
     </div>
 }
 </div>

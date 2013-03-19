@@ -1,18 +1,42 @@
 ﻿@model IList<DiffInfo>
 @{
     var commitLogEntry = (LogEntry)ViewBag.CommitLogEntry;
+
+    Func<char, string> diffLineStyle = c =>
+    {
+        switch (c)
+        {
+            case '+':
+                return "diff-line-add";
+            case '-':
+                return "diff-line-remove";
+            case ' ':
+                return "diff-line-context";
+            default:
+                return "diff-line-info";
+        }
+    };
+
     ViewBag.Title = "View Commit";
 }
 
 @section headers
 {
-    <script src="@Url.Content("~/Scripts/jquery.timeago.min.js")"></script>
-    <script>
+    <script src="@Url.Content("~/Scripts/jquery.timeago.min.js")" type="text/javascript"></script>
+    <script type="text/javascript">
         $(function () {
             $("div.date").timeago();
         });
     </script>
 }
+
+<style type="text/css">
+    .diff-line { white-space: pre; }
+    .diff-line-add { background: #afa; }
+    .diff-line-remove { background: #faa; }
+    .diff-line-info { background: #ddd; }
+</style>
+
 
 @Html.Partial("LogEntry", commitLogEntry, new ViewDataDictionary { { "Details", true } })
 
@@ -44,7 +68,13 @@
     if (!diff.Deleted && !diff.Added)
     {
         <div>
-            <pre>@string.Join(Environment.NewLine, diff.Lines)</pre>
+            <pre>
+                @foreach (var line in diff.Lines)
+                {
+                    <span class="diff-line @diffLineStyle(line[0])">@Html.Raw(Html.Encode(line))</span>
+                    @Environment.NewLine
+                }
+            </pre>
         </div>
     }
 }

@@ -5,40 +5,31 @@
 // <author>John Gietzen</author>
 //-----------------------------------------------------------------------
 
+using System.Text.RegularExpressions;
+
 namespace WebGitNet
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Cryptography;
     using System.Text;
-    using System.Web.Configuration;
     using System.Web.Mvc;
     using System.Web.Routing;
-    using MarkdownSharp;
 
     public static class HtmlHelpers
     {
         public static MvcHtmlString Markdown(this HtmlHelper html, string markdown)
         {
-            var markdownParser = new Markdown(true);
-
-            return new MvcHtmlString(markdownParser.Transform(markdown));
+            markdown = new Regex("#([0-9]+)").Replace(markdown, "<a href='http://netologic.by:8888/tfs/web/UI/Pages/WorkItems/WorkItemEdit.aspx?id=$1' target='_blank'>#$1</a>");
+            return new MvcHtmlString(markdown);
         }
 
         public static MvcHtmlString Gravatar(this HtmlHelper html, string email, string name, int size = 72)
         {
-            var fallBack = WebConfigurationManager.AppSettings["GravatarFallBack"];
-            if (string.IsNullOrEmpty(fallBack))
-            {
-                fallBack = "mm";
-            }
-
             var imgUrl = string.Format(
-                "https://secure.gravatar.com/avatar/{0}.png?s={1}&d={2}&r=g",
+                "https://secure.gravatar.com/avatar/{0}.png?s={1}&r=pg",
                 HashString(email),
-                size,
-                fallBack);
+                size);
 
             return new MvcHtmlString(string.Format("<img alt=\"\" width=\"{0}\" height=\"{0}\" title=\"{1}\" src=\"{2}\" />", size, html.AttributeEncode(name), html.AttributeEncode(imgUrl)));
         }

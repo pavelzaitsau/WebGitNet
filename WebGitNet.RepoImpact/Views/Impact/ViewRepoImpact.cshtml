@@ -1,4 +1,5 @@
-﻿@{
+﻿@using System.Web.Script.Serialization
+@{
     ViewBag.Title = "Repository Impact";
     IEnumerable<dynamic> weekly = ViewBag.Weekly;
     IEnumerable<dynamic> allTime = ViewBag.AllTime;
@@ -31,7 +32,7 @@
     var authors = users.ToDictionary(a => a.Value.ToString(), a => new { n = a.Key });
 
     var json = new { authors, buckets };
-    var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+    var serializer = new JavaScriptSerializer();
 }
 
 @section headers
