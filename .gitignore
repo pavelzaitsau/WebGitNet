@@ -9,3 +9,7 @@ Thumbs.db
 
 /WebGitNet/Plugins/
 /WebGitNet/Views/PluginCache/
+/packages
+
+/WebGitNet/Properties/PublishProfiles/*.pubxml
+/WebGitNet/Properties/PublishProfiles/*.pubxml

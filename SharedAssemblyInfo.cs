@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("John Gietzen")]
 [assembly: AssemblyProduct("WebGit .NET")]
-[assembly: AssemblyCopyright("Copyright © John Gietzen 2012")]
+[assembly: AssemblyCopyright("Copyright © John Gietzen 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
